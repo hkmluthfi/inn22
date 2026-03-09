@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday Inn!</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&family=Montserrat:wght@500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #fff0f5;
+            --header-bg: #ea4c89;
+            --text-purple: #8e358b;
+            --text-pink: #e83e8c;
+            --card-pink: #fce4ec;
+            --card-purple: #e1bee7;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            background-color: var(--bg-color);
+            font-family: 'Montserrat', sans-serif;
+            overflow-x: hidden;
+        }
+
+        /* Header Styles */
+        header {
+            background-color: var(--header-bg);
+            color: white;
+            padding: 1.5rem 3rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 50;
+        }
+
+        .header-left { display: flex; align-items: center; gap: 15px; font-weight: 700; font-size: 1.2rem; }
+        .header-left span { font-size: 2rem; }
+        .header-right a { color: white; text-decoration: none; margin-left: 30px; font-weight: 700; font-size: 1.1rem; transition: color 0.3s ease; cursor: pointer; }
+        .header-right a:hover { color: #ffe6f0; text-shadow: 0 0 10px rgba(255,255,255,0.5); }
+
+        /* Main Hero Section */
+        .hero {
+            height: 100vh;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 80px 10% 0;
+            position: relative;
+        }
+
+        .text-content { display: flex; flex-direction: column; gap: 10px; z-index: 2; animation: fadeIn 2s ease-in-out; }
+        h1 { font-family: 'Poppins', sans-serif; font-size: 6rem; line-height: 1.1; letter-spacing: 2px; }
+        .word-happy { color: var(--text-purple); }
+        .word-birthday { color: var(--text-pink); }
+        .word-inn {
+            font-size: 7rem;
+            background: linear-gradient(90deg, #fff0a8, #ffd1b3, #ffb3e6, #d9b3ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.05);
+            animation: pulse 3s infinite alternate;
+        }
+
+        /* =========================================
+           Modified for Round Frame (Bingkai Bulat)
+           ========================================= */
+        .image-content {
+            position: relative;
+            /* Mengubah ukuran menjadi persegi sempurna (bulat) */
+            width: 600px;
+            height: 600px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 2;
+            animation: slideIn 1.5s ease-out;
+        }
+
+        /* Frame (Garis bingkai hitam) */
+        .frame {
+            position: absolute;
+            border: 3px solid #333; /* Garis bingkai sedikit lebih tebal */
+            width: 100%;
+            height: 100%;
+            border-radius: 50%; /* MEMBUAT BINGKAI JADI BULAT */
+            transition: transform 0.5s ease;
+            background-color: #fff5f7; /* Latar belakang dalam bingkai putih */
+        }
+
+        /* Menjaga efek putaran dinamis, tapi tetap bulat */
+        .frame-1 { transform: rotate(-3deg); z-index: 1; }
+        .frame-2 { transform: rotate(4deg); z-index: 1; }
+
+        /* Efek hover untuk bingkai bulat */
+        .image-content:hover .frame-1 { transform: rotate(-8deg) scale(1.03); }
+        .image-content:hover .frame-2 { transform: rotate(8deg) scale(1.03); }
+
+        /* Gambar bunga di dalamnya */
+        .flower-img {
+            width: 90%; /* Sedikit lebih kecil agar ada jarak dengan bingkai */
+            height: 90%;
+            object-fit: cover; /* Mengisi lingkaran tanpa tarikan */
+            z-index: 2;
+            border-radius: 50%; /* MEMBUAT GAMBAR JADI BULAT */
+            box-shadow: inset 0 0 15px #ec407a; /* Bayangan dalam halus */
+            /* Menghilangkan bayangan luar dan translate lama */
+        }
+
+        /* =========================================
+           (Bagian Lainnya Tetap Sama)
+           ========================================= */
+
+        /* Gift Section */
+        .gift-section { min-height: 100vh; display: flex; flex-direction: column; padding-top: 60px; }
+        .gift-banner { background: linear-gradient(135deg, #d8b4e2 0%, #ffc0cb 50%, #ffe4b5 100%); text-align: center; padding: 30px 0; font-family: 'Poppins', sans-serif; font-size: 2.5rem; color: #333; letter-spacing: 1px; }
+        .gift-container { display: flex; flex: 1; width: 100%; }
+        .gift-card { flex: 1; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 2rem; text-align: center; }
+        .card-pink { background-color: var(--card-pink); }
+        .card-purple { background-color: var(--card-purple); }
+        .gift-icon { font-size: 8rem; margin-bottom: 20px; filter: drop-shadow(2px 4px 6px rgba(0,0,0,0.1)); transition: transform 0.3s ease; }
+        .gift-card:hover .gift-icon { transform: scale(1.1) rotate(5deg); }
+        .gift-card h3 { font-family: 'Poppins', sans-serif; font-size: 1.5rem; color: #333; margin-bottom: 20px; letter-spacing: 2px; }
+        .action-btn { padding: 12px 30px; font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 1rem; border: none; border-radius: 10px; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        .btn-pink { background-color: #e0c3cc; color: #333; }
+        .btn-purple { background-color: #c5a3c6; color: #333; }
+        .action-btn:hover { transform: translateY(-3px); box-shadow: 0 6px 12px rgba(0,0,0,0.15); }
+
+        /* Modals */
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); display: none; justify-content: center; align-items: center; z-index: 100; backdrop-filter: blur(5px); }
+        .modal-content { background: white; padding: 40px; border-radius: 20px; max-width: 500px; width: 90%; box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2); transform: scale(0.8); transition: transform 0.3s ease; position: relative; max-height: 90vh; overflow-y: auto; }
+        .modal-content.show { transform: scale(1); }
+        .modal-content h2 { color: var(--header-bg); margin-bottom: 20px; font-family: 'Poppins', sans-serif; text-align: center; }
+        .letters-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(70px, 1fr)); gap: 15px; margin-bottom: 25px; }
+        .mini-letter-btn { background: #fff; border: 2px solid var(--header-bg); border-radius: 10px; padding: 15px 10px; font-family: 'Poppins', sans-serif; font-weight: bold; font-size: 1.2rem; color: var(--header-bg); cursor: pointer; transition: all 0.3s ease; display: flex; justify-content: center; align-items: center; }
+        .mini-letter-btn:hover { background: var(--header-bg); color: white; transform: translateY(-3px) scale(1.05); box-shadow: 0 5px 10px rgba(234, 76, 137, 0.3); }
+        .letter-text { color: #555; font-size: 1.05rem; line-height: 1.8; margin-bottom: 25px; white-space: pre-line; text-align: center; }
+        .wish-textarea { width: 100%; height: 120px; padding: 15px; border: 2px solid #e1bee7; border-radius: 10px; font-family: 'Montserrat', sans-serif; font-size: 1rem; resize: none; margin-bottom: 20px; }
+        .wish-textarea:focus { outline: none; border-color: var(--header-bg); }
+        .modal-btn-container { text-align: center; display: flex; gap: 15px; justify-content: center; }
+        .close-btn, .submit-btn { padding: 10px 25px; font-size: 1rem; border-radius: 30px; cursor: pointer; font-weight: bold; border: none; transition: background 0.3s; }
+        .close-btn { background: #eee; color: #333; }
+        .close-btn:hover { background: #ddd; }
+        .submit-btn { background: var(--header-bg); color: white; }
+        .submit-btn:hover { background: #d03a74; }
+        .submit-btn:disabled { background: #f48fb1; cursor: not-allowed; }
+
+        /* Falling Petals */
+        .petal { position: fixed; background-color: #ffb6c1; border-radius: 15px 0 15px 0; opacity: 0.6; z-index: 1; pointer-events: none; animation: fall linear infinite; }
+        @keyframes fall { 0% { top: -10%; transform: translateX(0) rotate(0deg); } 100% { top: 110%; transform: translateX(100px) rotate(360deg); } }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes slideIn { from { opacity: 0; transform: translateX(50px); } to { opacity: 1; transform: translateX(0); } }
+        @keyframes pulse { from { transform: scale(1); } to { transform: scale(1.02); } }
+
+        @media (max-width: 900px) {
+            .hero { flex-direction: column; text-align: center; padding: 120px 2rem 2rem; justify-content: center; height: auto; min-height: 100vh;}
+            h1 { font-size: 4rem; }
+            .word-inn { font-size: 5rem; }
+            .image-content { width: 300px; height: 300px; margin-top: 3rem; }
+            .header-left span { display: none; }
+            .gift-container { flex-direction: column; }
+            .modal-content { width: 95%; padding: 25px; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="header-left"> <span>🌸</span> <div>For Inn, my special one.</div> </div>
+        <div class="header-right"> <a href="#" onclick="window.scrollTo(0,0); return false;">Home</a> <a href="#gift-section">Gift</a> </div>
+    </header>
+
+    <div class="hero">
+        <div class="text-content">
+            <h1 class="word-happy">HAPPY</h1>
+            <h1 class="word-birthday">BIRTHDAY</h1>
+            <h1 class="word-inn">INN!</h1>
+        </div>
+
+        <div class="image-content">
+            <div class="frame frame-1"></div>
+            <div class="frame frame-2"></div>
+            <img src="bungainn.jpeg" alt="Custom Flower Bouquet" class="flower-img">
+        </div>
+    </div>
+
+    <section id="gift-section" class="gift-section">
+        <div class="gift-banner">Gift</div>
+        <div class="gift-container">
+            <div class="gift-card card-pink">
+                <div class="gift-icon">💌</div>
+                <h3>LETTER</h3>
+                <button class="action-btn btn-pink" onclick="openModal('letterSelectionModal')">READ IT</button>
+            </div>
+            <div class="gift-card card-purple">
+                <div class="gift-icon">🎆</div>
+                <h3></h3>
+                <button class="action-btn btn-purple" onclick="openModal('wishesModal')">WISHES</button>
+            </div>
+        </div>
+    </section>
+
+    <div class="modal-overlay" id="letterSelectionModal">
+        <div class="modal-content" style="max-width: 600px;">
+            <h2>22 Letters for Your 22nd Birthday 💌</h2>
+            <p style="text-align: center; color: #555; margin-bottom: 20px;">Pilih surat yang ingin kamu baca yaa, sayang...</p>
+            <div class="letters-grid" id="lettersGrid"></div>
+            <div class="modal-btn-container">
+                <button class="close-btn" onclick="closeModal('letterSelectionModal')">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="letterModal">
+        <div class="modal-content">
+            <h2 id="letterTitle">Letter #</h2>
+            <div class="letter-text" id="letterContent"></div>
+            <div class="modal-btn-container">
+                <button class="close-btn" style="background: var(--header-bg); color: white;" onclick="backToSelection()">Kembali ke Menu</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="wishesModal">
+        <div class="modal-content">
+            <h2 id="wishesTitle">Make a Wish! ✨</h2>
+            <form id="wishesForm" action="https://formsubmit.co/hkmluthfi04@gmail.com" method="POST" onsubmit="submitWish(event)">
+                <input type="hidden" name="_captcha" value="false">
+                <input type="hidden" name="_subject" value="Harapan Ulang Tahun Baru dari Inn! 🎉">
+                <input type="hidden" name="_template" value="table">
+                <p style="margin-bottom: 15px; color: #555; text-align: center;">Tulis harapanmu di ulang tahun ini. Semoga semuanya terkabul yaa!</p>
+                <textarea name="Harapan_Inn" class="wish-textarea" placeholder="Tulis harapanmu di sini sayang..." required></textarea>
+                <div class="modal-btn-container">
+                    <button type="button" class="close-btn" onclick="closeModal('wishesModal')">Cancel</button>
+                    <button type="submit" class="submit-btn" id="btnSubmit">Kirim Harapan</button>
+                </div>
+            </form>
+            <div id="wishesSuccess" style="display: none; text-align: center; padding: 20px 0;">
+                <p style="font-size: 1.2rem; color: var(--header-bg); font-weight: bold;">Harapanmu sudah disimpan! 💖</p>
+                <p style="color: #555; margin-top: 10px;">Semoga semesta dan Tuhan mengabulkan semuanya. Amiiin!</p>
+                <button class="close-btn" style="margin-top: 20px;" onclick="closeModal('wishesModal')">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ... (Smooth scroll script tetap sama)
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({ behavior: 'smooth' });
+            });
+        });
+
+        // ==========================
+        // 22 LETTERS LOGIC
+        // ==========================
+        
+        const lettersData = Array.from({length: 22}, (_, i) => {
+            if (i === 21) {
+                return `Surat ke-22: Selamat ulang tahun yang ke-22, Inn! 🎉\n\nTerima kasih sudah menjadi bagian terindah dalam hidupku. Meski saat ini terpisah jarak antara Bandung dan Malaysia, perasaanku tetap sama untukmu. Semoga di umur yang baru ini kamu semakin bahagia, sehat selalu, dan semua yang kamu impikan tercapai. I love you! ❤️`;
+            }
+            return `Ini adalah dummy text untuk surat ke-${i + 1}.\n\nNanti kamu bisa edit bagian ini di dalam kode untuk memasukkan memori, harapan, atau cerita lucu kalian berdua.`;
+        });
+
+        const grid = document.getElementById('lettersGrid');
+        lettersData.forEach((_, index) => {
+            const btn = document.createElement('button');
+            btn.className = 'mini-letter-btn';
+            btn.innerText = index + 1;
+            btn.onclick = () => openSpecificLetter(index);
+            grid.appendChild(btn);
+        });
+
+        function openSpecificLetter(index) {
+            document.getElementById('letterTitle').innerText = `Surat #${index + 1} 💌`;
+            document.getElementById('letterContent').innerText = lettersData[index];
+            const selectionModal = document.getElementById('letterSelectionModal');
+            selectionModal.querySelector('.modal-content').classList.remove('show');
+            setTimeout(() => {
+                selectionModal.style.display = 'none';
+                openModal('letterModal');
+            }, 300);
+        }
+
+        function backToSelection() {
+            const letterModal = document.getElementById('letterModal');
+            letterModal.querySelector('.modal-content').classList.remove('show');
+            setTimeout(() => {
+                letterModal.style.display = 'none';
+                openModal('letterSelectionModal');
+            }, 300);
+        }
+
+        // ==========================
+        // GENERAL MODAL LOGIC
+        // ==========================
+
+        function openModal(modalId) {
+            const modal = document.getElementById(modalId);
+            modal.style.display = 'flex';
+            if(modalId === 'wishesModal') {
+                document.getElementById('wishesForm').style.display = 'block';
+                document.getElementById('wishesSuccess').style.display = 'none';
+                document.getElementById('wishesTitle').innerText = 'Make a Wish! ✨';
+                document.querySelector('.wish-textarea').value = '';
+                document.getElementById('btnSubmit').innerText = 'Kirim Harapan';
+                document.getElementById('btnSubmit').disabled = false;
+            }
+            setTimeout(() => modal.querySelector('.modal-content').classList.add('show'), 10);
+        }
+
+        function closeModal(modalId) {
+            const modal = document.getElementById(modalId);
+            modal.querySelector('.modal-content').classList.remove('show');
+            setTimeout(() => modal.style.display = 'none', 300);
+        }
+
+        function submitWish(event) {
+            event.preventDefault(); 
+            const form = document.getElementById('wishesForm');
+            const submitBtn = document.getElementById('btnSubmit');
+            
+            submitBtn.innerText = 'Mengirim...';
+            submitBtn.disabled = true;
+
+            fetch(form.action, {
+                method: 'POST',
+                body: new FormData(form),
+                headers: { 'Accept': 'application/json' }
+            }).then(response => {
+                if (response.ok) {
+                    document.getElementById('wishesForm').style.display = 'none';
+                    document.getElementById('wishesTitle').innerText = 'Yay! 🎉';
+                    document.getElementById('wishesSuccess').style.display = 'block';
+                } else {
+                    alert('Oops! Ada masalah saat mengirim harapan. Coba lagi ya.');
+                    submitBtn.innerText = 'Kirim Harapan';
+                    submitBtn.disabled = false;
+                }
+            }).catch(error => {
+                alert('Oops! Gagal mengirim. Pastikan koneksi internet lancar.');
+                submitBtn.innerText = 'Kirim Harapan';
+                submitBtn.disabled = false;
+            });
+        }
+
+        // Falling Petals
+        function createPetal() {
+            const petal = document.createElement('div');
+            petal.classList.add('petal');
+            const size = Math.random() * 15 + 10;
+            petal.style.width = `${size}px`;
+            petal.style.height = `${size}px`;
+            petal.style.left = `${Math.random() * 100}vw`;
+            petal.style.animationDuration = `${Math.random() * 3 + 4}s`;
+            document.body.appendChild(petal);
+            setTimeout(() => { petal.remove(); }, 7000);
+        }
+        setInterval(createPetal, 300);
+    </script>
+</body>
+</html>
