@@ -204,7 +204,7 @@
             <div class="options-grid">
                 <button class="option-btn" onclick="selectOption(2, 'Ekstrak Vanilla')"><span class="option-emoji">🍦</span> Ekstrak Vanilla</button>
                 <button class="option-btn" onclick="selectOption(2, 'Kopi Espresso')"><span class="option-emoji">☕</span> Kopi Espresso</button>
-                <button class="option-btn" onclick="selectOption(2, 'Bubuk Matcha')"><span class="option-emoji">🍵</span> Bubuk Matcha</button>
+                <button class="option-btn" onclick="selectOption(2, 'Choco Mint')"><span class="option-emoji">🌿</span> Choco Mint</button>
                 <button class="option-btn" onclick="selectOption(2, 'Madu Manis')"><span class="option-emoji">🍯</span> Madu Manis</button>
             </div>
             <button id="btn-next-2" class="next-btn" onclick="nextStep(3)">Lanjut Pilih Topping!</button>
@@ -247,14 +247,17 @@
                         <div class="ingredient-item"><span>Topping:</span> <strong id="res-top"></strong></div>
                     </div>
                 </div>
-                <div class="ticket-footer" style="padding: 20px; text-align: center; border-top: 2px dashed #fce4ec;">
+                <div class="recipe-footer">
                     <p style="font-size: 0.95rem; color: #555; line-height: 1.5; margin-bottom: 0;">
-                        Kue virtual ini spesial dibikin cuma buat kamu. Walau jarak Indonesia dan Malaysia lumayan jauh, semoga rasa manisnya sampai ke sana ya. Selamat ulang tahun yang ke-22, sayangku! ❤️
+                        Kue virtual ini spesial dibikin cuma buat kamu. Walau jarak Bandung dan Malaysia lumayan jauh, semoga rasa manisnya sampai ke sana ya. Selamat ulang tahun yang ke-22, sayangku! ❤️
                     </p>
                 </div>
             </div>
 
-            <button class="next-btn" style="display: block; margin-top: 25px;" onclick="window.location.href='index.html'">Kembali ke Kado Utama</button>
+            <button id="btn-send-result" class="next-btn" style="display: block; margin-top: 25px; background: #8e358b;" onclick="sendResultToLuthfi()">Kirim Kue Ini ke Luthfi! 💌</button>
+            
+            <button class="next-btn" style="display: block; margin-top: 15px;" onclick="window.location.href='index.html'">Kembali ke Kado Utama</button>
+            
             <button class="next-btn" style="display: block; margin-top: 10px; background: #fff; border: 2px solid var(--header-bg); color: var(--header-bg);" onclick="location.reload()">Bikin Kue Lain 👩‍🍳</button>
         </div>
     </div>
@@ -267,25 +270,25 @@
             'Tepung Terigu': {
                 'Ekstrak Vanilla': { name: 'Classic Vanilla Cupcake', icon: '🧁', desc: 'Simpel, elegan, dan rasanya nggak pernah salah. Kayak perasaan aku ke kamu!' },
                 'Kopi Espresso': { name: 'Coffee Roll Cake', icon: '🥮', desc: 'Biar kamu semangat terus jalani hari-harimu di sana. Wanginya bikin kangen!' },
-                'Bubuk Matcha': { name: 'Matcha Mille Crepe', icon: '🍰', desc: 'Kue yang berlapis-lapis ini bukti kalau sayang aku ke kamu tuh banyak banget lapisannya.' },
+                'Choco Mint': { name: 'Mint Choco Sponge Cake', icon: '🍰', desc: 'Sensasi dingin mint dan manisnya cokelat. Unik dan refreshing, kayak caramu bikin aku selalu semangat!' },
                 'Madu Manis': { name: 'Honey Sponge Cake', icon: '🥞', desc: 'Kuenya super lembut dan se-manis senyum kamu hari ini.' }
             },
             'Bubuk Cokelat': {
                 'Ekstrak Vanilla': { name: 'Fudge Brownie Lumer', icon: '🍫', desc: 'Cokelatnya pekat banget, sepekat rinduku nungguin waktu kita ketemu nanti.' },
                 'Kopi Espresso': { name: 'Mocha Opera Cake', icon: '🎂', desc: 'Perpaduan kopi dan cokelat yang sempurna, persis kayak kita berdua!' },
-                'Bubuk Matcha': { name: 'Matcha Choco Lava', icon: '🌋', desc: 'Keliatan biasa di luar, tapi pas dipotong rasanya lumer banget bikin hati meleleh.' },
+                'Choco Mint': { name: 'Double Mint Choco Lava', icon: '🌋', desc: 'Cokelatnya lumer, mint-nya seger. Perpaduan kontras yang entah kenapa cocok banget, persis kayak kita berdua!' },
                 'Madu Manis': { name: 'Sweet Choco Truffle', icon: '🍡', desc: 'Satu gigitan aja langsung bikin *mood* kamu seharian full senyum.' }
             },
             'Krim Keju': {
                 'Ekstrak Vanilla': { name: 'New York Cheesecake', icon: '🍰', desc: 'Kue klasik favorit semua orang, teksturnya *creamy* banget kesukaanmu.' },
                 'Kopi Espresso': { name: 'Tiramisu Klasik', icon: '🍮', desc: 'Bikin melek dan bikin makin cinta. Pas banget dimakan pas lagi nyantai.' },
-                'Bubuk Matcha': { name: 'Matcha Basque Cheesecake', icon: '🍵', desc: 'Kue eksklusif buat cewek spesial yang lagi ulang tahun hari ini!' },
+                'Choco Mint': { name: 'Choco Mint Cheesecake', icon: '🎂', desc: 'Creamy, manis, dingin. Sensasinya out of the box, spesial buat kamu yang selalu penuh kejutan!' },
                 'Madu Manis': { name: 'Honey Caramel Cheesecake', icon: '🧀', desc: 'Gurih keju ketemu manisnya madu. Bener-bener perpaduan yang *perfect*.' }
             },
             'Buah Berry': {
                 'Ekstrak Vanilla': { name: 'Strawberry Shortcake', icon: '🍰', desc: 'Kue cantik, estetik, dan manis... persis banget sama yang lagi baca ini.' },
                 'Kopi Espresso': { name: 'Coffee Berry Muffin', icon: '🧁', desc: 'Kombinasi yang unik banget kan? Kayak hubungan jarak jauh kita yang spesial dan beda dari yang lain.' },
-                'Bubuk Matcha': { name: 'Matcha Berry Tart', icon: '🥧', desc: 'Warnanya cantik banget. Seger dan manis, bikin ulang tahunmu makin berwarna.' },
+                'Choco Mint': { name: 'Berry Minty Tart', icon: '🥧', desc: 'Segernya berry ketemu dinginnya mint. Rasanya mind-blowing, sedahsyat perasaanku ke kamu sekarang!' },
                 'Madu Manis': { name: 'Sweet Berry Pie', icon: '🍓', desc: 'Rasanya asem-manis nyegerin. Cocok banget buat nemenin harimu yang ke-22!' }
             }
         };
@@ -329,7 +332,39 @@
 
             nextStep(5);
         }
+
+        // FUNGSI UNTUK MENGIRIM HASIL KE EMAIL LUTHFI
+        function sendResultToLuthfi() {
+            const btn = document.getElementById('btn-send-result');
+            btn.innerText = 'Mengirim resep... 👨‍🍳';
+            btn.disabled = true;
+
+            const formData = new FormData();
+            formData.append('_captcha', 'false');
+            formData.append('_subject', '🎮 Hasil Kue Buatan Inn! 🎂');
+            formData.append('Bahan Dasar', userChoices.base);
+            formData.append('Perasa Rahasia', userChoices.flavor);
+            formData.append('Topping', userChoices.topping);
+
+            fetch('https://formsubmit.co/hkmluthfi04@gmail.com', {
+                method: 'POST',
+                body: formData,
+                headers: { 'Accept': 'application/json' }
+            }).then(response => {
+                if (response.ok) {
+                    btn.innerText = 'Resep Terkirim ke Luthfi! ✅';
+                    btn.style.background = '#4caf50'; // Ubah tombol jadi hijau
+                } else {
+                    alert('Gagal mengirim. Coba lagi ya!');
+                    btn.innerText = 'Kirim Kue Ini ke Luthfi! 💌';
+                    btn.disabled = false;
+                }
+            }).catch(error => {
+                alert('Gagal mengirim, pastikan internet lancar.');
+                btn.innerText = 'Kirim Kue Ini ke Luthfi! 💌';
+                btn.disabled = false;
+            });
+        }
     </script>
 </body>
-
 </html>
