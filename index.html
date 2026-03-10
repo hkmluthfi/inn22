@@ -15,11 +15,7 @@
             --card-purple: #e1bee7;
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         html { scroll-behavior: smooth; }
 
@@ -46,7 +42,7 @@
 
         .header-left { display: flex; align-items: center; gap: 15px; font-weight: 700; font-size: 1.2rem; }
         .header-left span { font-size: 2rem; }
-        .header-right a { color: white; text-decoration: none; margin-left: 30px; font-weight: 700; font-size: 1.1rem; transition: color 0.3s ease; cursor: pointer; }
+        .header-right a { color: white; text-decoration: none; margin-left: 20px; font-weight: 700; font-size: 1.1rem; transition: color 0.3s ease; cursor: pointer; }
         .header-right a:hover { color: #ffe6f0; text-shadow: 0 0 10px rgba(255,255,255,0.5); }
 
         /* Main Hero Section */
@@ -72,12 +68,8 @@
             animation: pulse 3s infinite alternate;
         }
 
-        /* =========================================
-           Modified for Round Frame (Bingkai Bulat)
-           ========================================= */
         .image-content {
             position: relative;
-            /* Mengubah ukuran menjadi persegi sempurna (bulat) */
             width: 600px;
             height: 600px;
             display: flex;
@@ -87,43 +79,39 @@
             animation: slideIn 1.5s ease-out;
         }
 
-        /* Frame (Garis bingkai hitam) */
         .frame {
             position: absolute;
-            border: 3px solid #333; /* Garis bingkai sedikit lebih tebal */
+            border: 3px solid #333; 
             width: 100%;
             height: 100%;
-            border-radius: 50%; /* MEMBUAT BINGKAI JADI BULAT */
+            border-radius: 50%; 
             transition: transform 0.5s ease;
-            background-color: #fff5f7; /* Latar belakang dalam bingkai putih */
+            background-color: #fff5f7; 
         }
 
-        /* Menjaga efek putaran dinamis, tapi tetap bulat */
         .frame-1 { transform: rotate(-3deg); z-index: 1; }
         .frame-2 { transform: rotate(4deg); z-index: 1; }
 
-        /* Efek hover untuk bingkai bulat */
         .image-content:hover .frame-1 { transform: rotate(-8deg) scale(1.03); }
         .image-content:hover .frame-2 { transform: rotate(8deg) scale(1.03); }
 
-        /* Gambar bunga di dalamnya */
         .flower-img {
-            width: 90%; /* Sedikit lebih kecil agar ada jarak dengan bingkai */
+            width: 90%; 
             height: 90%;
-            object-fit: cover; /* Mengisi lingkaran tanpa tarikan */
+            object-fit: cover; 
             z-index: 2;
-            border-radius: 50%; /* MEMBUAT GAMBAR JADI BULAT */
-            box-shadow: inset 0 0 15px #ec407a; /* Bayangan dalam halus */
-            /* Menghilangkan bayangan luar dan translate lama */
+            border-radius: 50%; 
+            box-shadow: inset 0 0 15px #ec407a; 
         }
 
-        /* =========================================
-           (Bagian Lainnya Tetap Sama)
-           ========================================= */
-
-        /* Gift Section */
-        .gift-section { min-height: 100vh; display: flex; flex-direction: column; padding-top: 60px; }
+        /* Sections */
+        .gift-section, .games-section { min-height: 100vh; display: flex; flex-direction: column; padding-top: 60px; }
+        
         .gift-banner { background: linear-gradient(135deg, #d8b4e2 0%, #ffc0cb 50%, #ffe4b5 100%); text-align: center; padding: 30px 0; font-family: 'Poppins', sans-serif; font-size: 2.5rem; color: #333; letter-spacing: 1px; }
+        
+        /* Banner khusus untuk game agar warnanya sedikit beda */
+        .games-banner { background: linear-gradient(135deg, #ffc0cb 0%, #ffe4b5 50%, #d8b4e2 100%); text-align: center; padding: 30px 0; font-family: 'Poppins', sans-serif; font-size: 2.5rem; color: #333; letter-spacing: 1px; }
+
         .gift-container { display: flex; flex: 1; width: 100%; }
         .gift-card { flex: 1; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 2rem; text-align: center; }
         .card-pink { background-color: var(--card-pink); }
@@ -157,6 +145,7 @@
 
         /* Falling Petals */
         .petal { position: fixed; background-color: #ffb6c1; border-radius: 15px 0 15px 0; opacity: 0.6; z-index: 1; pointer-events: none; animation: fall linear infinite; }
+        
         @keyframes fall { 0% { top: -10%; transform: translateX(0) rotate(0deg); } 100% { top: 110%; transform: translateX(100px) rotate(360deg); } }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
         @keyframes slideIn { from { opacity: 0; transform: translateX(50px); } to { opacity: 1; transform: translateX(0); } }
@@ -177,7 +166,11 @@
 
     <header>
         <div class="header-left"> <span>🌸</span> <div>For Inn, my special one.</div> </div>
-        <div class="header-right"> <a href="#" onclick="window.scrollTo(0,0); return false;">Home</a> <a href="#gift-section">Gift</a> </div>
+        <div class="header-right"> 
+            <a href="#" onclick="window.scrollTo(0,0); return false;">Home</a> 
+            <a href="#gift-section">Gift</a> 
+            <a href="#games-section">Games</a>
+        </div>
     </header>
 
     <div class="hero">
@@ -204,8 +197,24 @@
             </div>
             <div class="gift-card card-purple">
                 <div class="gift-icon">🎆</div>
-                <h3></h3>
-                <button class="action-btn btn-purple" onclick="openModal('wishesModal')">WISHES</button>
+                <h3>WISHES</h3>
+                <button class="action-btn btn-purple" onclick="openModal('wishesModal')">MAKE A WISH</button>
+            </div>
+        </div>
+    </section>
+
+    <section id="games-section" class="games-section">
+        <div class="games-banner">Mini Games</div>
+        <div class="gift-container">
+            <div class="gift-card card-purple">
+                <div class="gift-icon">✈️</div>
+                <h3>OUR TRIP</h3>
+                <button class="action-btn btn-purple" onclick="window.location.href='travel.html'">PLAY NOW</button>
+            </div>
+            <div class="gift-card card-pink">
+                <div class="gift-icon">👩‍🍳</div>
+                <h3>BAKE CAKE</h3>
+                <button class="action-btn btn-pink" onclick="window.location.href='game.html'">PLAY NOW</button>
             </div>
         </div>
     </section>
@@ -254,7 +263,7 @@
     </div>
 
     <script>
-        // ... (Smooth scroll script tetap sama)
+        // Smooth scroll
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
@@ -262,10 +271,7 @@
             });
         });
 
-        // ==========================
         // 22 LETTERS LOGIC
-        // ==========================
-        
         const lettersData = Array.from({length: 22}, (_, i) => {
             if (i === 21) {
                 return `Surat ke-22: Selamat ulang tahun yang ke-22, Inn! 🎉\n\nTerima kasih sudah menjadi bagian terindah dalam hidupku. Meski saat ini terpisah jarak antara Bandung dan Malaysia, perasaanku tetap sama untukmu. Semoga di umur yang baru ini kamu semakin bahagia, sehat selalu, dan semua yang kamu impikan tercapai. I love you! ❤️`;
@@ -302,10 +308,7 @@
             }, 300);
         }
 
-        // ==========================
         // GENERAL MODAL LOGIC
-        // ==========================
-
         function openModal(modalId) {
             const modal = document.getElementById(modalId);
             modal.style.display = 'flex';
@@ -371,4 +374,3 @@
     </script>
 </body>
 </html>
-
