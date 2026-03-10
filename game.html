@@ -254,9 +254,7 @@
                 </div>
             </div>
 
-            <button id="btn-send-result" class="next-btn" style="display: block; margin-top: 25px; background: #8e358b;" onclick="sendResultToLuthfi()">Kirim Kue Ini ke Luthfi! 💌</button>
-            
-            <button class="next-btn" style="display: block; margin-top: 15px;" onclick="window.location.href='index.html'">Kembali ke Kado Utama</button>
+            <button class="next-btn" style="display: block; margin-top: 25px;" onclick="window.location.href='index.html'">Kembali ke Kado Utama</button>
             
             <button class="next-btn" style="display: block; margin-top: 10px; background: #fff; border: 2px solid var(--header-bg); color: var(--header-bg);" onclick="location.reload()">Bikin Kue Lain 👩‍🍳</button>
         </div>
@@ -331,39 +329,6 @@
             document.getElementById('res-top').innerText = userChoices.topping;
 
             nextStep(5);
-        }
-
-        // FUNGSI UNTUK MENGIRIM HASIL KE EMAIL LUTHFI
-        function sendResultToLuthfi() {
-            const btn = document.getElementById('btn-send-result');
-            btn.innerText = 'Mengirim resep... 👨‍🍳';
-            btn.disabled = true;
-
-            const formData = new FormData();
-            formData.append('_captcha', 'false');
-            formData.append('_subject', '🎮 Hasil Kue Buatan Inn! 🎂');
-            formData.append('Bahan Dasar', userChoices.base);
-            formData.append('Perasa Rahasia', userChoices.flavor);
-            formData.append('Topping', userChoices.topping);
-
-            fetch('https://formsubmit.co/hkmluthfi04@gmail.com', {
-                method: 'POST',
-                body: formData,
-                headers: { 'Accept': 'application/json' }
-            }).then(response => {
-                if (response.ok) {
-                    btn.innerText = 'Resep Terkirim ke Luthfi! ✅';
-                    btn.style.background = '#4caf50'; // Ubah tombol jadi hijau
-                } else {
-                    alert('Gagal mengirim. Coba lagi ya!');
-                    btn.innerText = 'Kirim Kue Ini ke Luthfi! 💌';
-                    btn.disabled = false;
-                }
-            }).catch(error => {
-                alert('Gagal mengirim, pastikan internet lancar.');
-                btn.innerText = 'Kirim Kue Ini ke Luthfi! 💌';
-                btn.disabled = false;
-            });
         }
     </script>
 </body>
