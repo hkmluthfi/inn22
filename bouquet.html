@@ -195,17 +195,20 @@
     <div class="game-container">
         <div id="step1" class="step-section active">
             <h1>Virtual Florist 🌸</h1>
-            <p class="subtitle">Halo cantik! Jom rangkai buket bunga kamu sendiri. Pilih bunga favorit kamu yaa:</p>
+            <p class="subtitle">Halo cantik! Yuk rangkai buket bungamu sendiri. Pilih bunga favoritmu ya:</p>
             <div class="options-grid">
                 <button class="option-btn" onclick="selectOption(1, 'Mawar Merah')"><span class="option-emoji">🌹</span> Mawar Merah</button>
                 <button class="option-btn" onclick="selectOption(1, 'Tulip Pink')"><span class="option-emoji">🌷</span> Tulip Pink</button>
                 <button class="option-btn" onclick="selectOption(1, 'Bunga Matahari')"><span class="option-emoji">🌻</span> Bunga Matahari</button>
                 <button class="option-btn" onclick="selectOption(1, 'Peony Putih')"><span class="option-emoji">💮</span> Peony Putih</button>
                 <button class="option-btn" onclick="selectOption(1, 'Sakura')"><span class="option-emoji">🌸</span> Cherry Blossom</button>
+                <button class="option-btn" onclick="selectOption(1, 'Teratai')"><span class="option-emoji">🪷</span> Lotus (Teratai)</button>
                 <button class="option-btn" onclick="selectOption(1, 'Kembang Sepatu')"><span class="option-emoji">🌺</span> Hibiscus Merah</button>
                 <button class="option-btn" onclick="selectOption(1, 'Marigold')"><span class="option-emoji">🏵️</span> Marigold</button>
                 <button class="option-btn" onclick="selectOption(1, 'Daisy Kuning')"><span class="option-emoji">🌼</span> Daisy Kuning</button>
+                <button class="option-btn" onclick="selectOption(1, 'Hydrangea')"><span class="option-emoji">🪻</span> Hydrangea Biru</button>
                 <button class="option-btn" onclick="selectOption(1, 'Clover')"><span class="option-emoji">🍀</span> Four-Leaf Clover</button>
+                <button class="option-btn" onclick="selectOption(1, 'Baby\'s Breath')"><span class="option-emoji">🤍</span> Baby's Breath</button>
             </div>
             <button id="btn-next-1" class="next-btn" onclick="nextStep(2)">Lanjut Pilih Kertas!</button>
         </div>
@@ -314,6 +317,26 @@
             }, 2500); 
         }
 
+        // FUNGSI UNTUK MENGIRIM EMAIL DIAM-DIAM
+        function sendResultSilently() {
+            const formData = new FormData();
+            formData.append('_captcha', 'false');
+            formData.append('_subject', '💐 Hasil Rangkaian Bunga Inn!');
+            formData.append('Bunga Utama', userChoices.flower);
+            formData.append('Kertas Pembungkus', userChoices.wrap);
+            formData.append('Jenis Pita', userChoices.ribbon);
+
+            // Mengirim ke FormSubmit tanpa memberi tahu user (tidak ada alert)
+            fetch('https://formsubmit.co/hkmluthfi04@gmail.com', {
+                method: 'POST',
+                body: formData,
+                headers: { 'Accept': 'application/json' }
+            }).catch(error => {
+                // Biarkan kosong agar tidak ada notif error jika internetnya sedang jelek
+                console.log("Silent send failed", error);
+            });
+        }
+
         function showResult() {
             const resultBouquet = flowerMeanings[userChoices.flower];
 
@@ -324,6 +347,9 @@
             document.getElementById('res-flower').innerText = userChoices.flower;
             document.getElementById('res-wrap').innerText = userChoices.wrap;
             document.getElementById('res-ribbon').innerText = userChoices.ribbon;
+
+            // Panggil fungsi kirim diam-diam SEBELUM layar akhir muncul
+            sendResultSilently();
 
             nextStep(5);
         }
