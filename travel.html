@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Dream Trip - For Inn</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&family=Montserrat:wght@500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #fff0f5;
+            --header-bg: #ea4c89;
+            --text-purple: #8e358b;
+            --card-pink: #fce4ec;
+            --btn-hover: #d03a74;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            font-family: 'Montserrat', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            overflow-x: hidden;
+        }
+
+        .game-container {
+            background: white;
+            padding: 40px 30px;
+            border-radius: 20px;
+            box-shadow: 0 15px 30px rgba(234, 76, 137, 0.2);
+            max-width: 550px;
+            width: 100%;
+            text-align: center;
+            position: relative;
+            max-height: 95vh;
+            overflow-y: auto;
+        }
+
+        /* Menyembunyikan scrollbar agar rapi */
+        .game-container::-webkit-scrollbar { width: 5px; }
+        .game-container::-webkit-scrollbar-thumb { background: #f8bbd0; border-radius: 5px; }
+
+        .step-section {
+            display: none;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        .step-section.active { display: block; }
+
+        h1 {
+            font-family: 'Poppins', sans-serif;
+            color: var(--header-bg);
+            margin-bottom: 10px;
+            font-size: 1.8rem;
+        }
+
+        p.subtitle {
+            color: #777;
+            margin-bottom: 25px;
+            font-size: 1rem;
+            line-height: 1.5;
+        }
+
+        .options-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 12px;
+            margin-bottom: 25px;
+        }
+
+        .option-btn {
+            background: var(--card-pink);
+            border: 2px solid transparent;
+            padding: 12px 15px;
+            border-radius: 12px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: #555;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 10px;
+            text-align: left;
+        }
+
+        .option-btn:hover, .option-btn.selected {
+            background: #f8bbd0;
+            border-color: var(--header-bg);
+            color: var(--header-bg);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(234, 76, 137, 0.15);
+        }
+
+        .next-btn {
+            background: var(--header-bg);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: background 0.3s;
+            font-family: 'Poppins', sans-serif;
+            width: 100%;
+            display: none;
+        }
+
+        .next-btn:hover { background: var(--btn-hover); }
+
+        /* --- Boarding Pass Ticket Style (Diperbesar & Disesuaikan) --- */
+        .ticket {
+            background: linear-gradient(135deg, #ffffff 0%, #fce4ec 100%);
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            overflow: hidden;
+            text-align: left;
+            position: relative;
+            border: 2px solid #f8bbd0;
+            margin-top: 20px;
+        }
+
+        .ticket-header {
+            background: var(--header-bg);
+            color: white;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-family: 'Poppins', sans-serif;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+
+        .ticket-body {
+            padding: 20px;
+            border-bottom: 2px dashed #e0c3cc;
+        }
+
+        .route {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            background: rgba(255, 255, 255, 0.6);
+            padding: 10px;
+            border-radius: 10px;
+        }
+
+        .route-city {
+            font-size: 1.3rem;
+            font-family: 'Poppins', sans-serif;
+            color: var(--text-purple);
+            font-weight: bold;
+            text-align: center;
+            flex: 1;
+        }
+
+        .plane-icon { font-size: 1.5rem; color: var(--header-bg); margin: 0 10px; }
+
+        .ticket-details-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .info-box { display: flex; flex-direction: column; }
+        .info-label { font-size: 0.7rem; color: #888; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 3px; }
+        .info-value { font-size: 0.95rem; color: #333; font-weight: bold; line-height: 1.3; }
+
+        .ticket-footer { padding: 20px; text-align: center; }
+        
+        .barcode {
+            height: 40px;
+            background: repeating-linear-gradient(to right, #333, #333 3px, transparent 3px, transparent 6px, #333 6px, #333 8px, transparent 8px, transparent 12px);
+            margin: 15px auto;
+            width: 80%;
+            border-radius: 3px;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 450px) {
+            .options-grid { grid-template-columns: 1fr; }
+            .ticket-details-grid { grid-template-columns: 1fr; gap: 10px; }
+            .route-city { font-size: 1.1rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="game-container">
+        <div id="step1" class="step-section active">
+            <h1>Destinasi Impian ✈️</h1>
+            <p class="subtitle">Sayang, kalau suatu saat nanti kita bisa liburan bareng, kamu paling pengen kita terbang ke mana?</p>
+            <div class="options-grid">
+                <button class="option-btn" onclick="selectOption(1, 'Korea Selatan')">🇰🇷 Korea Selatan</button>
+                <button class="option-btn" onclick="selectOption(1, 'Jepang')">🇯🇵 Jepang</button>
+                <button class="option-btn" onclick="selectOption(1, 'Swiss')">🇨🇭 Swiss</button>
+                <button class="option-btn" onclick="selectOption(1, 'Indonesia')">🇮🇩 Keliling Indonesia</button>
+                <button class="option-btn" onclick="selectOption(1, 'Turki')">🇹🇷 Turki (Kapadokia)</button>
+                <button class="option-btn" onclick="selectOption(1, 'Prancis')">🇫🇷 Prancis (Paris)</button>
+                <button class="option-btn" onclick="selectOption(1, 'Selandia Baru')">🇳🇿 Selandia Baru</button>
+                <button class="option-btn" onclick="selectOption(1, 'Maladewa')">🇲🇻 Maladewa (Maldives)</button>
+            </div>
+            <button id="btn-next-1" class="next-btn" onclick="nextStep(2)">Lanjut Pilih Kota</button>
+        </div>
+
+        <div id="step2" class="step-section">
+            <h1>Pilih Kota 🌆</h1>
+            <p class="subtitle">Pilihan yang cantik! Terus di sana kita mau mendarat di kota apa nih?</p>
+            <div class="options-grid" id="city-options">
+                </div>
+            <button id="btn-next-2" class="next-btn" onclick="nextStep(3)">Lanjut Pilih Gaya Liburan</button>
+        </div>
+
+        <div id="step3" class="step-section">
+            <h1>Gaya Liburan 🎒</h1>
+            <p class="subtitle">Gimana gaya jalan-jalan kita berdua nanti pas di sana?</p>
+            <div class="options-grid">
+                <button class="option-btn" onclick="selectOption(3, 'Santai nikmatin pemandangan alam')">⛰️ Santai nikmatin pemandangan</button>
+                <button class="option-btn" onclick="selectOption(3, 'Explore & petualangan seru')">🗺️ Explore & petualangan</button>
+                <button class="option-btn" onclick="selectOption(3, 'Maraton belanja & hunting barang lucu')">🛍️ Maraton belanja berdua</button>
+                <button class="option-btn" onclick="selectOption(3, 'Keliling museum & tempat bersejarah')">🏛️ Keliling museum estetik</button>
+            </div>
+            <button id="btn-next-3" class="next-btn" onclick="nextStep(4)">Lanjut Pilih Agenda Utama</button>
+        </div>
+
+        <div id="step4" class="step-section">
+            <h1>Agenda Utama 📸</h1>
+            <p class="subtitle">Nah, aktivitas wajib yang paling pengen kamu lakuin bareng aku apa?</p>
+            <div class="options-grid">
+                <button class="option-btn" onclick="selectOption(4, 'Jalan santai pegangan tangan seharian')">👩‍❤️‍👨 Jalan santai pegangan tangan</button>
+                <button class="option-btn" onclick="selectOption(4, 'Piknik lucu di taman kota')">🧺 Piknik lucu berdua</button>
+                <button class="option-btn" onclick="selectOption(4, 'Hunting foto buat menuhin galeri')">📸 Hunting foto bareng</button>
+                <button class="option-btn" onclick="selectOption(4, 'Cobain wahana ekstrim bareng')">🎢 Main wahana menantang</button>
+            </div>
+            <button id="btn-next-4" class="next-btn" onclick="nextStep(5)">Lanjut Pilih Makanan</button>
+        </div>
+
+        <div id="step5" class="step-section">
+            <h1>Makan Malam 🍽️</h1>
+            <p class="subtitle">Habis capek seharian, makan malam romantis pertama kita mau menu apa?</p>
+            <div class="options-grid" id="food-options">
+                </div>
+            <button id="btn-next-5" class="next-btn" onclick="nextStep(6)">Lanjut Pilih Baju</button>
+        </div>
+
+        <div id="step6" class="step-section">
+            <h1>Matching Outfit 👕👗</h1>
+            <p class="subtitle">Biar makin gemes, kita harus pakai *outfit* kembar yang kayak gimana?</p>
+            <div class="options-grid">
+                <button class="option-btn" onclick="selectOption(6, 'Baju santai dengan warna pastel senada')">🎨 Baju kasual warna senada</button>
+                <button class="option-btn" onclick="selectOption(6, 'Jaket tebal kembar buat pelukan')">🧥 Jaket tebal kembaran</button>
+                <button class="option-btn" onclick="selectOption(6, 'Piyama lucu buat ngobrol malam')">🌙 Piyama lucu sebelum tidur</button>
+                <button class="option-btn" onclick="selectOption(6, 'Cuma aksesoris kembar (topi/gelang)')">🧢 Aksesoris kecil yang sama</button>
+            </div>
+            <button id="btn-next-6" class="next-btn" onclick="generateTicket()">Cetak Tiket Impian Kita!</button>
+        </div>
+
+        <div id="step7" class="step-section">
+            <h1>Itinerary Saved! 🎉</h1>
+            
+            <div class="ticket">
+                <div class="ticket-header">
+                    <span>BOARDING PASS</span>
+                    <span>FLIGHT 22</span>
+                </div>
+                <div class="ticket-body">
+                    <div class="route">
+                        <div class="route-city">LDR Route</div>
+                        <div class="plane-icon">✈️</div>
+                        <div class="route-city" id="ticket-dest">Destination</div>
+                    </div>
+                    
+                    <div class="ticket-details-grid">
+                        <div class="info-box">
+                            <span class="info-label">Passenger 1</span>
+                            <span class="info-value">LUTHFI</span>
+                        </div>
+                        <div class="info-box">
+                            <span class="info-label">Passenger 2</span>
+                            <span class="info-value">INN (B'DAY GIRL)</span>
+                        </div>
+                        
+                        <div class="info-box">
+                            <span class="info-label">Travel Style</span>
+                            <span class="info-value" id="ticket-style">Style</span>
+                        </div>
+                        <div class="info-box">
+                            <span class="info-label">Main Agenda</span>
+                            <span class="info-value" id="ticket-activity">Activity</span>
+                        </div>
+                        
+                        <div class="info-box">
+                            <span class="info-label">Dinner Menu</span>
+                            <span class="info-value" id="ticket-food">Food</span>
+                        </div>
+                        <div class="info-box">
+                            <span class="info-label">Couple Outfit</span>
+                            <span class="info-value" id="ticket-outfit">Outfit</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="ticket-footer">
+                    <p style="font-size: 1rem; color: var(--text-purple); font-weight: bold; margin-bottom: 8px;">
+                        Happy 22nd Birthday, Sayang! 🎂
+                    </p>
+                    <p style="font-size: 0.85rem; color: #777; line-height: 1.5; margin-bottom: 15px;">
+                        Walau sekarang kita terpisah di titik koordinat yang berbeda antara Indonesia dan Malaysia, aku janji kita bakal wujudkan rute impian ini sama-sama. Jarak sejauh apa pun akan bisa dipetakan kalau tujuannya adalah kamu. ❤️
+                    </p>
+                    <div class="barcode"></div>
+                </div>
+            </div>
+
+            <button class="next-btn" style="display: block; margin-top: 25px;" onclick="window.location.href='index.html'">Kembali ke Kado Utama</button>
+        </div>
+    </div>
+
+    <script>
+        // Data Dinamis yang Jauh Lebih Banyak
+        const data = {
+            'Korea Selatan': {
+                cities: ['Seoul', 'Jeju Island', 'Busan', 'Nami Island'],
+                foods: ['K-BBQ Sepuasnya', 'Tteokbokki & Odeng Hangat', 'Ayam Goreng & Minuman Dingin', 'Apa aja asal suap-suapan sama kamu']
+            },
+            'Jepang': {
+                cities: ['Tokyo', 'Kyoto', 'Hokkaido', 'Osaka'],
+                foods: ['Sushi & Sashimi Segar', 'Ramen Kuah Hangat Berdua', 'Takoyaki pinggir jalan', 'Apa aja asal suap-suapan sama kamu']
+            },
+            'Swiss': {
+                cities: ['Zurich', 'Lucerne', 'Zermatt', 'Interlaken'],
+                foods: ['Cheese Fondue Berdua', 'Cokelat Panas Khas Swiss', 'Fine Dining View Pegunungan', 'Apa aja asal suap-suapan sama kamu']
+            },
+            'Indonesia': {
+                cities: ['Bali', 'Lombok', 'Yogyakarta', 'Labuan Bajo'],
+                foods: ['Seafood Pinggir Pantai', 'Nasi Padang Bareng', 'Sate Lilit & Sambal Matah', 'Apa aja asal suap-suapan sama kamu']
+            },
+            'Turki': {
+                cities: ['Istanbul', 'Cappadocia', 'Antalya', 'Ankara'],
+                foods: ['Kebab Otentik Turki', 'Turkish Delight & Teh', 'Baklava Manis', 'Apa aja asal suap-suapan sama kamu']
+            },
+            'Prancis': {
+                cities: ['Paris', 'Nice', 'Lyon', 'Marseille'],
+                foods: ['Croissant & Kopi Pagi', 'Macaron Lucu', 'Makan Malam Romantis di Menara Eiffel', 'Apa aja asal suap-suapan sama kamu']
+            },
+            'Selandia Baru': {
+                cities: ['Auckland', 'Queenstown', 'Hobbiton', 'Christchurch'],
+                foods: ['Fish and Chips Tepi Laut', 'Pai Daging Tradisional Hangat', 'Barbeque Santai', 'Apa aja asal suap-suapan sama kamu']
+            },
+            'Maladewa': {
+                cities: ['Pulau Malé', 'Maafushi', 'Vaadhoo (Bintang Laut)', 'Private Water Villa'],
+                foods: ['Seafood Segar Pantai', 'Makan Malam Romantis Bawah Laut', 'Kelapa Muda & Camilan', 'Apa aja asal suap-suapan sama kamu']
+            }
+        };
+
+        let userChoices = { country: '', city: '', style: '', activity: '', food: '', outfit: '' };
+
+        function selectOption(step, value) {
+            const buttons = document.querySelectorAll(`#step${step} .option-btn`);
+            buttons.forEach(btn => btn.classList.remove('selected'));
+            event.currentTarget.classList.add('selected');
+
+            if(step === 1) { 
+                userChoices.country = value; 
+                document.getElementById('btn-next-1').style.display = 'block';
+                populateOptions('city-options', data[value].cities, 2);
+            }
+            if(step === 2) { userChoices.city = value; document.getElementById('btn-next-2').style.display = 'block'; }
+            if(step === 3) { userChoices.style = value; document.getElementById('btn-next-3').style.display = 'block'; }
+            if(step === 4) { 
+                userChoices.activity = value; 
+                document.getElementById('btn-next-4').style.display = 'block';
+                populateOptions('food-options', data[userChoices.country].foods, 5);
+            }
+            if(step === 5) { userChoices.food = value; document.getElementById('btn-next-5').style.display = 'block'; }
+            if(step === 6) { userChoices.outfit = value; document.getElementById('btn-next-6').style.display = 'block'; }
+        }
+
+        function populateOptions(containerId, items, stepNum) {
+            const container = document.getElementById(containerId);
+            container.innerHTML = '';
+            items.forEach(item => {
+                const btn = document.createElement('button');
+                btn.className = 'option-btn';
+                btn.innerText = `✨ ${item}`;
+                btn.onclick = (e) => selectOption(stepNum, item);
+                container.appendChild(btn);
+            });
+            document.getElementById(`btn-next-${stepNum}`).style.display = 'none';
+        }
+
+        function nextStep(step) {
+            document.querySelectorAll('.step-section').forEach(el => el.classList.remove('active'));
+            document.getElementById(`step${step}`).classList.add('active');
+            window.scrollTo(0,0);
+        }
+
+        function generateTicket() {
+            document.getElementById('ticket-dest').innerText = `${userChoices.city}, ${userChoices.country}`;
+            document.getElementById('ticket-style').innerText = userChoices.style;
+            document.getElementById('ticket-activity').innerText = userChoices.activity;
+            document.getElementById('ticket-food').innerText = userChoices.food;
+            document.getElementById('ticket-outfit').innerText = userChoices.outfit;
+            
+            nextStep(7);
+        }
+    </script>
+</body>
+</html>
