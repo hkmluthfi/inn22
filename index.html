@@ -327,12 +327,30 @@
         });
 
         // 22 LETTERS LOGIC
-        const lettersData = Array.from({length: 22}, (_, i) => {
-            if (i === 21) {
-                return `Surat ke-22: Selamat ulang tahun yang ke-22, Inn! 🎉\n\nTerima kasih sudah menjadi bagian terindah dalam hidupku. Meski saat ini terpisah jarak antara Bandung dan Malaysia, perasaanku tetap sama untukmu. Semoga di umur yang baru ini kamu semakin bahagia, sehat selalu, dan semua yang kamu impikan tercapai. I love you! ❤️`;
-            }
-            return `Ini adalah dummy text untuk surat ke-${i + 1}.\n\nNanti kamu bisa edit bagian ini di dalam kode untuk memasukkan memori, harapan, atau cerita lucu kalian berdua.`;
-        });
+        const lettersData = [
+            "Surat ke-1 💌\n\nTerima kasih yaa sudah datang di hidupku. Aku benar-benar senang punya kamu yang selalu melengkapi hari-hariku.",
+            "Surat ke-2 💌\n\nKesan pertama aku waktu lihat kamu, kamu kelihatan seperti orang yang dewasa dan baik. Dari situ aku langsung merasa kamu orang yang berbeda.",
+            "Surat ke-3 💌\n\nAku suka cara kamu berpikir, apalagi waktu kamu cerita tentang masa depan. Rasanya kamu benar-benar serius menjalani hidup.",
+            "Surat ke-4 💌\n\nAku juga suka sifat kamu yang kelihatan extrovert, tapi kalau ngomong kadang masih setengah-setengah. Justru itu yang bikin kamu kelihatan lucu dan gemes.",
+            "Surat ke-5 💌\n\nKamu memperlakukan aku persis seperti aku ingin diperlakukan. Kamu baik, pengertian, dan selalu mencoba memahami aku.",
+            "Surat ke-6 💌\n\nAku juga senang setiap kali kamu maksa aku buat pergi ke kelas. Kedengarannya sepele, tapi dari situ aku tahu kamu benar-benar peduli sama masa depan aku.",
+            "Surat ke-7 💌\n\nAku kadang ingin mengulang masa-masa kita bisa sering ketemu langsung, makan bareng, main bareng, ngobrol lama. Aku benar-benar kangen kamu, sayang.",
+            "Surat ke-8 💌\n\nKamu membuat aku melihat dunia dengan cara yang lebih baik. Dulu aku merasa hidup tanpa tujuan, tapi sekarang tujuanku sederhana: bagaimana suatu hari nanti bisa hidup bahagia bareng kamu.",
+            "Surat ke-9 💌\n\nAku masih ingat waktu kamu suka notice rambut aku. Cara kamu lihat aku dan ngobrol sama aku waktu itu bikin aku berpikir, “kayaknya aku harus pacari orang ini.”",
+            "Surat ke-10 💌\n\nKamu benar-benar berbeda dari orang lain. Buat aku kamu hampir sempurna: cantik, clingy, pintar, dan juga pengertian.",
+            "Surat ke-11 💌\n\nAku bangga banget dengan pencapaian akademik kamu. Sekarang kamu juga aktif belajar, pakai LinkedIn, ambil course online. Aku lihat kamu benar-benar berusaha berkembang.",
+            "Surat ke-12 💌\n\nKamu orang yang kuat, aku yakin itu. Mungkin kadang kamu sendiri nggak sadar sekuat apa kamu sebenarnya.",
+            "Surat ke-13 💌\n\nAku berharap kamu bisa mencapai semua mimpi yang kamu inginkan. Aku selalu ingin melihat kamu berhasil dan bahagia.",
+            "Surat ke-14 💌\n\nKalau suatu hari kamu merasa capek atau ragu sama diri kamu sendiri, ingat ya… ada aku yang selalu percaya sama kamu.",
+            "Surat ke-15 💌\n\nAku kangen banget sama kamu. Rasanya ingin selalu dekat, nggak terpisah, supaya kita bisa menjalani aktivitas sehari-hari bareng.",
+            "Surat ke-16 💌\n\nKadang aku cuma ingin duduk di samping kamu, ngobrol hal random, ketawa bareng, tanpa harus memikirkan apa pun.",
+            "Surat ke-17 💌\n\nSuatu hari nanti ayo kita travel bareng dan pergi dating dalam keadaan yang sudah halal. Aku ingin merasakan semua momen itu sama kamu.",
+            "Surat ke-18 💌\n\nMari kita sama-sama menjadi orang yang lebih baik lagi. Pelan-pelan, tapi bersama.",
+            "Surat ke-19 💌\n\nAku juga belajar banyak dari kamu, tentang cara bersabar, cara memahami orang lain, dan cara melihat hidup dengan lebih positif.",
+            "Surat ke-20 💌\n\nAku janji akan melakukan yang terbaik untuk kita, untuk hubungan ini, dan untuk masa depan yang mungkin kita bangun bersama.",
+            "Surat ke-21 💌\n\nTerima kasih sudah tetap ada sampai sekarang, sudah bertahan, dan tetap memilih aku di antara banyak kemungkinan lain.",
+            "Surat ke-22 💌\n\nDan dari semua hal yang terjadi di hidupku, bertemu kamu tetap jadi salah satu hal terbaik yang pernah aku alami. Aku sayang kamu Inn. ❤️"
+        ];
 
         const grid = document.getElementById('lettersGrid');
         lettersData.forEach((_, index) => {
@@ -429,5 +447,6 @@
     </script>
 </body>
 </html>
+
 
 
