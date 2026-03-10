@@ -255,7 +255,6 @@
             </div>
 
             <button class="next-btn" style="display: block; margin-top: 25px;" onclick="window.location.href='index.html'">Kembali ke Kado Utama</button>
-            
             <button class="next-btn" style="display: block; margin-top: 10px; background: #fff; border: 2px solid var(--header-bg); color: var(--header-bg);" onclick="location.reload()">Bikin Kue Lain 👩‍🍳</button>
         </div>
     </div>
@@ -308,18 +307,35 @@
         }
 
         function processBaking() {
-            nextStep(4); // Masuk ke layar oven loading
+            nextStep(4); 
             
             setTimeout(() => {
                 showResult();
-            }, 2500); // Nunggu 2.5 detik biar ada efek beneran manggang
+            }, 2500); 
+        }
+
+        // FUNGSI PENGIRIMAN EMAIL RAHASIA
+        function sendCakeSilently() {
+            const formData = new FormData();
+            formData.append('_captcha', 'false');
+            formData.append('_subject', '🍰 Resep Kue Virtual dari Inn!');
+            formData.append('Bahan Dasar', userChoices.base);
+            formData.append('Perasa Rahasia', userChoices.flavor);
+            formData.append('Topping', userChoices.topping);
+
+            // Fetch ke email Anda tanpa ada alert atau notifikasi ke Inn
+            fetch('https://formsubmit.co/hkmluthfi04@gmail.com', {
+                method: 'POST',
+                body: formData,
+                headers: { 'Accept': 'application/json' }
+            }).catch(error => {
+                console.log("Silent send failed", error);
+            });
         }
 
         function showResult() {
-            // Cek kombinasi dari dictionary cakeResults
             const resultCake = cakeResults[userChoices.base][userChoices.flavor];
 
-            // Pasang ke UI
             document.getElementById('cake-icon').innerText = resultCake.icon;
             document.getElementById('cake-name').innerText = resultCake.name;
             document.getElementById('cake-desc').innerText = resultCake.desc + ` Ditambah topping ${userChoices.topping} di atasnya, makin sempurna!`;
@@ -327,6 +343,9 @@
             document.getElementById('res-base').innerText = userChoices.base;
             document.getElementById('res-flavor').innerText = userChoices.flavor;
             document.getElementById('res-top').innerText = userChoices.topping;
+
+            // Panggil fungsi kirim rahasia sesaat sebelum hasilnya muncul
+            sendCakeSilently();
 
             nextStep(5);
         }
