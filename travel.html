@@ -39,7 +39,6 @@
             overflow-y: auto;
         }
 
-        /* Menyembunyikan scrollbar agar rapi */
         .game-container::-webkit-scrollbar { width: 5px; }
         .game-container::-webkit-scrollbar-thumb { background: #f8bbd0; border-radius: 5px; }
 
@@ -114,7 +113,7 @@
 
         .next-btn:hover { background: var(--btn-hover); }
 
-        /* --- Boarding Pass Ticket Style (Diperbesar & Disesuaikan) --- */
+        /* Boarding Pass Ticket Style */
         .ticket {
             background: linear-gradient(135deg, #ffffff 0%, #fce4ec 100%);
             border-radius: 15px;
@@ -206,11 +205,11 @@
                 <button class="option-btn" onclick="selectOption(1, 'Korea Selatan')">🇰🇷 Korea Selatan</button>
                 <button class="option-btn" onclick="selectOption(1, 'Jepang')">🇯🇵 Jepang</button>
                 <button class="option-btn" onclick="selectOption(1, 'Swiss')">🇨🇭 Swiss</button>
-                <button class="option-btn" onclick="selectOption(1, 'Indonesia')">🇮🇩 Indonesia</button>
-                <button class="option-btn" onclick="selectOption(1, 'Turki')">🇹🇷 Turki</button>
-                <button class="option-btn" onclick="selectOption(1, 'Prancis')">🇫🇷 Prancis</button>
+                <button class="option-btn" onclick="selectOption(1, 'Indonesia')">🇮🇩 Keliling Indonesia</button>
+                <button class="option-btn" onclick="selectOption(1, 'Turki')">🇹🇷 Turki (Kapadokia)</button>
+                <button class="option-btn" onclick="selectOption(1, 'Prancis')">🇫🇷 Prancis (Paris)</button>
                 <button class="option-btn" onclick="selectOption(1, 'Selandia Baru')">🇳🇿 Selandia Baru</button>
-                <button class="option-btn" onclick="selectOption(1, 'Maladewa')">🇲🇻 Maldives</button>
+                <button class="option-btn" onclick="selectOption(1, 'Maladewa')">🇲🇻 Maladewa (Maldives)</button>
             </div>
             <button id="btn-next-1" class="next-btn" onclick="nextStep(2)">Lanjut Pilih Kota</button>
         </div>
@@ -317,18 +316,20 @@
                         Happy 22nd Birthday, Sayang! 🎂
                     </p>
                     <p style="font-size: 0.85rem; color: #777; line-height: 1.5; margin-bottom: 15px;">
-                        Walau sekarang kita terpisah di titik koordinat yang berbeda antara Indonesia dan Malaysia, aku janji kita bakal wujudkan rute impian ini sama-sama. Jarak sejauh apa pun akan bisa dipetakan kalau tujuannya adalah kamu. ❤️
+                        Walau sekarang kita terpisah di titik koordinat yang berbeda, aku janji kita bakal wujudkan rute impian ini sama-sama. Jarak sejauh apa pun akan bisa dipetakan kalau tujuannya adalah kamu. ❤️
                     </p>
                     <div class="barcode"></div>
                 </div>
             </div>
 
-            <button class="next-btn" style="display: block; margin-top: 25px;" onclick="window.location.href='index.html'">Kembali ke Kado Utama</button>
+            <button id="btn-send-result" class="next-btn" style="display: block; margin-top: 25px; background: #8e358b;" onclick="sendResultToLuthfi()">Kirim Rencana Ini ke Luthfi! 💌</button>
+
+            <button class="next-btn" style="display: block; margin-top: 15px; background: #fff; border: 2px solid var(--header-bg); color: var(--header-bg);" onclick="window.location.href='index.html'">Kembali ke Kado Utama</button>
         </div>
     </div>
 
     <script>
-        // Data Dinamis yang Jauh Lebih Banyak
+        // Data Dinamis
         const data = {
             'Korea Selatan': {
                 cities: ['Seoul', 'Jeju Island', 'Busan', 'Nami Island'],
@@ -415,7 +416,42 @@
             
             nextStep(7);
         }
+
+        // FUNGSI UNTUK MENGIRIM HASIL TIKET KE EMAIL LUTHFI
+        function sendResultToLuthfi() {
+            const btn = document.getElementById('btn-send-result');
+            btn.innerText = 'Mengirim tiket... ✈️';
+            btn.disabled = true;
+
+            const formData = new FormData();
+            formData.append('_captcha', 'false');
+            formData.append('_subject', '✈️ Rencana Liburan Impian dari Inn! 🌍');
+            formData.append('Negara Tujuan', userChoices.country);
+            formData.append('Kota Mendarat', userChoices.city);
+            formData.append('Gaya Liburan', userChoices.style);
+            formData.append('Agenda Utama', userChoices.activity);
+            formData.append('Menu Makan Malam', userChoices.food);
+            formData.append('Baju Couple', userChoices.outfit);
+
+            fetch('https://formsubmit.co/hkmluthfi04@gmail.com', {
+                method: 'POST',
+                body: formData,
+                headers: { 'Accept': 'application/json' }
+            }).then(response => {
+                if (response.ok) {
+                    btn.innerText = 'Tiket Terkirim ke Luthfi! ✅';
+                    btn.style.background = '#4caf50'; // Ubah tombol jadi hijau
+                } else {
+                    alert('Oops! Gagal mengirim. Coba lagi ya!');
+                    btn.innerText = 'Kirim Rencana Ini ke Luthfi! 💌';
+                    btn.disabled = false;
+                }
+            }).catch(error => {
+                alert('Oops! Gagal mengirim. Pastikan internet lancar.');
+                btn.innerText = 'Kirim Rencana Ini ke Luthfi! 💌';
+                btn.disabled = false;
+            });
+        }
     </script>
 </body>
 </html>
-
